@@ -4,7 +4,7 @@ library(shiny)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
   counts <- tapply(myData$Percent, list(as.factor(myData$Party), as.factor(myData$Kommun)), mean)
-  colours <- c("darkblue", "green", "blue", "orange", "red" ,"darkred", "seagreen", "lightblue", "pink")
+  colours <- c("green","pink", "blue", "purple","darkblue", "seagreen","red" ,"lightblue",  "darkred")
 
   
  distplot <- eventReactive(input$action, {
@@ -12,7 +12,7 @@ shinyServer(function(input, output) {
      
      barplot(counts, main="Votes, by municipal and party",
              xlab="Municipal", col=colours,
-             legend = myData$Party[1:9] , beside=TRUE)
+             legend = rownames(counts) , beside=TRUE)
      
    } else {
      
@@ -23,7 +23,7 @@ shinyServer(function(input, output) {
      
      
      barplot(counts, main="Votes, by municipal and party",
-             xlab="Municipal", col=colours[seq(length(input))],
+             xlab="Municipal", col=colours[seq(length(input$select))],
              legend = rownames(counts) , beside=TRUE)
    }
   })
